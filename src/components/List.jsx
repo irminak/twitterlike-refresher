@@ -1,31 +1,19 @@
 import Post from './Post';
 import classes from './List.module.css';
-import NewPost from './NewPost';
-import Modal from './Modal';
-import { useState } from 'react';
 
-function List({ isPosting, onStopPosting }) {
-    const [posts, setPosts] = useState([]);
+import { useLoaderData } from 'react-router-dom';
 
-    const addPostHandler = (postData) => {
-        setPosts((prevPosts) => [postData, ...prevPosts]);
-    };
+function List() {
+    const posts = useLoaderData();
 
     return (
         <>
-            {isPosting && (
-                <Modal onClose={onStopPosting}>
-                    <NewPost
-                        onCancel={onStopPosting}
-                        onAddPost={addPostHandler}
-                    />
-                </Modal>
-            )}
             {posts.length > 0 && (
                 <ul className={classes.posts}>
                     {posts.map((post) => (
                         <Post
-                            key={post.body}
+                            key={post.id}
+                            id={post.id}
                             author={post.author}
                             body={post.body}
                         />
